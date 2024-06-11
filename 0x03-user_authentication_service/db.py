@@ -65,3 +65,13 @@ class DB:
         if not user:
             raise NoResultFound()
         return user
+    def update_user(self, user_id: int, **kwargs) -> None:
+        """ a function that update user atributeiSearches for user instance using given id parameter
+        """
+        user_update = self.find_user_by(id=user_id)
+        session = self._session
+        for attr, val in kwargs.items():
+            if not hasattr(User, attr):
+                raise ValueError
+            setattr(user_update, attr, val)
+        session.commit()
